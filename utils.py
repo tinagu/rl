@@ -3,17 +3,6 @@ import torch
 from torch import nn
 import numpy as np
 
-Activation = Union[str, nn.Module]
-
-_str_to_activation = {
-    'relu': nn.ReLU(),
-    'tanh': nn.Tanh(),
-    'leaky_relu': nn.LeakyReLU(),
-    'sigmoid': nn.Sigmoid(),
-    'selu': nn.SELU(),
-    'softplus': nn.Softplus(),
-    'identity': nn.Identity(),
-}
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
@@ -22,22 +11,16 @@ def build_mlp(
         input_size: int,
         output_size: int,
         n_layers: int,
-        size: int,
-        activation: Activation = 'tanh',
-        output_activation: Activation = 'identity',
+        size: int
 ):
-    if isinstance(activation, str):
-        activation = _str_to_activation[activation]
-    if isinstance(output_activation, str):
-        output_activation = _str_to_activation[output_activation]
     layers = []
     in_size = input_size
     for _ in range(n_layers):
         layers.append(nn.Linear(in_size, size))
-        layers.append(activation)
+        layers.append(nn.Tanh())
         in_size = size
     layers.append(nn.Linear(in_size, output_size))
-    layers.append(output_activation)
+    layers.append(nn.Identity())
 
     mlp = nn.Sequential(*layers)
     mlp.to(device)
