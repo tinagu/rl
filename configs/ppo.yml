@@ -1,0 +1,29 @@
+exp_name: HalfCheetah-v2
+env_id: HalfCheetah-v2
+
+seed: 0
+
+ppo:
+    epsilon: 0.2
+    hidden_sizes: [64, 64]
+    clip_ratio: 0.2
+    actor_learning_rate: 3.0e-4
+    critic_learning_rate: 1.0e-3
+    actor_train_iters: 80
+    critic_train_iters: 80
+    target_kl: 0.01
+    tau: 0.95
+    gamma: 0.99
+
+train:
+    batch_size: 4000
+    num_epoch: 3000
+    max_ep_len: 1000
+    min_explorations_before_train: 0
+    num_explorations_per_epoch: 4000
+    num_train_loop_per_epoch: 1
+    num_train_per_train_loop: 1
+    num_validate_episode: 10
+
+load_from_checkpoint: ./models/ppo
+model_saving_interval: 2

@@ -1,0 +1,25 @@
+exp_name: CartPole-v0
+env_id: CartPole-v0
+
+seed: 0
+
+dqn:
+    epsilon: 0.2
+    hidden_sizes: [32, 32]
+    polyak: 0.99
+    learning_rate: 1.0e-3
+    gamma: 0.99
+    target_update_period: 1
+
+train:
+    batch_size: 256
+    num_epoch: 3000
+    max_ep_len: 1000
+    min_explorations_before_train: 1000
+    num_explorations_per_epoch: 1000
+    num_train_loop_per_epoch: 1
+    num_train_per_train_loop: 1000
+    num_validate_episode: 10
+
+load_from_checkpoint: ./models/dqn
+model_saving_interval: 2
